@@ -154,7 +154,7 @@ tap homebrew/cask
 cask balenaetcher
 cask brave-browser
 cask discord
-cask font-fira-mono-nerd-font
+cask font-fira-code-nerd-font
 cask gimp
 cask git-credential-manager
 cask gpg-suite
