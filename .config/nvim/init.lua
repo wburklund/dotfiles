@@ -415,8 +415,8 @@ require('lazy').setup({
   {
     'nvim-telescope/telescope-file-browser.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
-    opts = { hijack_netrw = true },
-    main = 'telescope/_extensions/file_browser',
+    opts = { hijack_netrw = true }, -- Replace netrw when opening a directory
+    main = 'telescope/_extensions/file_browser', -- Manually specify main module
   },
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -579,22 +579,22 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         pyright = {
-          capabilities = (function() -- Using Ruff
+          capabilities = (function() -- Trim capabilities since we are using Ruff
             local caps = vim.lsp.protocol.make_client_capabilities()
-            caps.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+            caps.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 } -- Disable pyright hints
             return caps
           end)(),
           settings = {
             pyright = {
-              disableOrganizeImports = true, -- Using Ruff
+              disableOrganizeImports = true, -- Let Ruff handle import sorting
             },
             python = {
               analysis = {
-                ignore = { '*' }, --Using Ruff
+                ignore = { '*' }, -- Disable pyright analyses in favor of Ruff's
               },
             },
           },
-          before_init = function(_, config)
+          before_init = function(_, config) -- Include Pylance type stubs
             config.settings.python.analysis.stubPath = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy', 'python-type-stubs')
           end,
         },
@@ -606,7 +606,7 @@ require('lazy').setup({
           init_options = {
             settings = {
               -- Any extra CLI arguments for `ruff` go here.
-              args = { '--config=' .. os.getenv 'HOME' .. '/.config/nvim/ruff.toml' },
+              args = { '--config=' .. os.getenv 'HOME' .. '/.config/nvim/ruff.toml' }, -- Use custom Ruff ruleset (Hatch-like)
             },
           },
         },
@@ -682,7 +682,7 @@ require('lazy').setup({
     },
     event = 'VeryLazy',
     config = function()
-      local function shorten_name(filename)
+      local function shorten_name(filename) -- Prune unnecessary parts of displayed venv paths
         local hatch_home = os.getenv 'HOME' .. '/Library/Application Support/hatch'
         return filename:gsub(hatch_home, '~Hatch'):gsub(os.getenv 'HOME', '~'):gsub('/bin/python', '')
       end
@@ -690,15 +690,14 @@ require('lazy').setup({
       require('venv-selector').setup {
         settings = {
           options = {
-            debug = true,
             on_telescope_result_callback = shorten_name,
           },
 
           search = {
-            hatch = {
+            hatch = { -- Look specifically at Hatch's environments, filtering out debugpy
               command = "fd -p -d 6 '/bin/python$' ~/Library/Application\\\\ Support/hatch/env",
             },
-            my_envs = {
+            my_envs = { -- My personal venv directory
               command = "fd -p -d 3 '/bin/python$' ~/venvs",
             },
           },
@@ -742,10 +741,6 @@ require('lazy').setup({
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         -- javascript = { { "prettierd", "prettier" } },
-
-        -- css = { 'prettierd' },
-        -- html = { 'prettierd' },
-        -- javascript = { 'prettierd' },
       },
     },
   },
@@ -919,7 +914,8 @@ require('lazy').setup({
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
 
-      require('mini.icons').setup() -- Icons
+      --  TODO: Is there more I need to do to enable icons?
+      require('mini.icons').setup() -- Icons.
       require('mini.pairs').setup() -- Auto complete bracket pairs
     end,
   },
@@ -955,6 +951,7 @@ require('lazy').setup({
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
   },
+  -- Only show one line of context per scope
   { 'nvim-treesitter/nvim-treesitter-context', opts = { multiline_threshold = 1 } },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
@@ -991,7 +988,7 @@ require('lazy').setup({
   {
     'windwp/nvim-ts-autotag',
     branch = 'nvim_0.9',
-    opts = {
+    opts = { -- Use </ for closing tags instead of auto like for VSCode: friendlier with auto-indent
       enable_close = false,
       enable_close_on_slash = true,
     },
