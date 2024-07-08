@@ -515,7 +515,7 @@ require('lazy').setup({
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
           --  the definition of its *type*, not where it was *defined*.
-          map('gT', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype Definition')
+          map('gY', require('telescope.builtin').lsp_type_definitions, '[G]oto T[y]pe Definition')
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
