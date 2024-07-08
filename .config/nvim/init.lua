@@ -583,17 +583,15 @@ require('lazy').setup({
             return caps
           end)(),
           settings = {
-            pyright = {
+            basedpyright = {
               disableOrganizeImports = true, -- Let Ruff handle import sorting
-            },
-            python = {
               analysis = {
-                ignore = { '*' }, -- Disable pyright analyses in favor of Ruff's
+                ignore = { '*' }, -- Disable basedpyright diagnostic messages in favor of Ruff's
               },
             },
           },
           before_init = function(_, config) -- Include Pylance type stubs
-            config.settings.python.analysis.stubPath = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy', 'python-type-stubs')
+            config.settings.basedpyright.analysis.stubPath = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy', 'python-type-stubs')
           end,
         },
         ruff_lsp = {
@@ -709,9 +707,15 @@ require('lazy').setup({
   {
     'stevearc/oil.nvim',
     opts = {
-      columns = { 'permissions', 'size' },
+      columns = { 'icon', 'permissions', 'size' },
       watch_for_changes = true,
-      view_options = { show_hidden = true, case_insensitive = true },
+      view_options = {
+        show_hidden = true,
+        case_insensitive = true,
+        is_always_hidden = function(name)
+          return vim.endswith(name, '.pyc')
+        end,
+      },
     },
     keys = {
       { '<leader>F', '<cmd>Oil<cr>', desc = '[F]ile browser' },
