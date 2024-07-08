@@ -373,25 +373,12 @@ require('lazy').setup({
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
-          file_browser = {
-            grouped = true, -- Files before folders
-            hidden = { file_browser = true, folder_browser = true }, -- Show hidden files/folders
-            follow_symlinks = true,
-            hijack_netrw = true, -- Replace netrw when opening a directory
-            mappings = {
-              ['n'] = {
-                g = false,
-                p = require('telescope._extensions.file_browser.actions').goto_parent_dir,
-              },
-            },
-          },
         },
       }
 
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
-      pcall(require('telescope').load_extension, 'file_browser')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -405,14 +392,6 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-
-      -- Telescope file browser
-      vim.keymap.set('n', '<leader>F', function()
-        if vim.api.nvim_buf_get_name(0) ~= '' or vim.api.nvim_tabpage_list_wins(0)[2] ~= nil then
-          vim.cmd 'tabnew'
-        end
-        require('telescope').extensions.file_browser.file_browser()
-      end, { desc = '[F]ile browser' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -436,11 +415,6 @@ require('lazy').setup({
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
     end,
-  },
-  {
-    'nvim-telescope/telescope-file-browser.nvim',
-    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
-    main = 'telescope/_extensions/file_browser', -- Manually specify main module
   },
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -730,6 +704,17 @@ require('lazy').setup({
     end,
     keys = {
       { '<leader>Pv', '<cmd>VenvSelect<cr>', desc = '[P]ython [v]env select' },
+    },
+  },
+  {
+    'stevearc/oil.nvim',
+    opts = {
+      columns = { 'permissions', 'size' },
+      watch_for_changes = true,
+      view_options = { show_hidden = true, case_insensitive = true },
+    },
+    keys = {
+      { '<leader>F', '<cmd>Oil<cr>', desc = '[F]ile browser' },
     },
   },
   { -- Autoformat
