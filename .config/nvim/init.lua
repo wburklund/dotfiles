@@ -1011,9 +1011,8 @@ require('lazy').setup({
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   'tpope/vim-fugitive', -- Install Vim Fugitive
   {
-    -- 'mpas/marp-nvim',
-    'sano-jin/marp-nvim',
-    opts = { cli_options = '--html' },
+    'mpas/marp-nvim',
+    opts = {},
     keys = {
       { '<leader>MT', '<cmd>MarpToggle<cr>', desc = '[M]arp [T]oggle' },
       { '<leader>MS', '<cmd>MarpStatus<cr>', desc = '[M]arp [S]tatus' },
