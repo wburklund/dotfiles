@@ -226,11 +226,11 @@ vim.diagnostic.config {
   virtual_text = {
     source = true,
     format = function(diagnostic)
-      if diagnostic.user_data and diagnostic.user_data.code then
-        return string.format('%s %s', diagnostic.user_data.code, diagnostic.message)
-      else
-        return diagnostic.message
+      if diagnostic.code then
+        return ('[%s] %s'):format(diagnostic.code, diagnostic.message)
       end
+
+      return diagnostic.message
     end,
   },
   signs = true,
