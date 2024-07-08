@@ -174,7 +174,14 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-vim.keymap.set('n', '<leader>T', '<cmd>tab term<cr>', { desc = 'Open [t]erminal tab' })
+vim.keymap.set('n', '<leader>T', function()
+  if vim.api.nvim_buf_get_name(0) ~= '' or vim.api.nvim_tabpage_list_wins(0)[2] ~= nil then
+    vim.cmd 'tabnew'
+  end
+  vim.cmd.terminal()
+end, { desc = 'Open [T]erminal' })
+
+--vim.keymap.set('n', '<leader>T', '<cmd>tab term<cr>', { desc = 'Open [t]erminal tab' })
 
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -366,6 +373,18 @@ require('lazy').setup({
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
+          file_browser = {
+            grouped = true, -- Files before folders
+            hidden = { file_browser = true, folder_browser = true }, -- Show hidden files/folders
+            follow_symlinks = true,
+            hijack_netrw = true, -- Replace netrw when opening a directory
+            mappings = {
+              ['n'] = {
+                g = false,
+                p = require('telescope._extensions.file_browser.actions').goto_parent_dir,
+              },
+            },
+          },
         },
       }
 
@@ -387,7 +406,13 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
-      vim.keymap.set('n', '<leader>sb', '<cmd>Telescope file_browser<cr>', { desc = 'Tele[s]cope File [B]rowser' })
+      -- Telescope file browser
+      vim.keymap.set('n', '<leader>F', function()
+        if vim.api.nvim_buf_get_name(0) ~= '' or vim.api.nvim_tabpage_list_wins(0)[2] ~= nil then
+          vim.cmd 'tabnew'
+        end
+        require('telescope').extensions.file_browser.file_browser()
+      end, { desc = '[F]ile browser' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -415,7 +440,6 @@ require('lazy').setup({
   {
     'nvim-telescope/telescope-file-browser.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
-    opts = { hijack_netrw = true }, -- Replace netrw when opening a directory
     main = 'telescope/_extensions/file_browser', -- Manually specify main module
   },
   { -- LSP Configuration & Plugins
@@ -868,9 +892,9 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      --vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'tokyonight-night'
       vim.cmd.colorscheme 'gruvbox'
-
+      vim.g.gruvbox_contrast_dark = 'soft'
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
@@ -968,7 +992,7 @@ require('lazy').setup({
   require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
-  require 'kickstart.plugins.neo-tree',
+  -- require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
@@ -976,10 +1000,11 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  --  'tpope/vim-fugitive', -- Install Vim Fugitive
+  'tpope/vim-fugitive', -- Install Vim Fugitive
   {
-    'mpas/marp-nvim',
-    opts = {},
+    -- 'mpas/marp-nvim',
+    'sano-jin/marp-nvim',
+    opts = { cli_options = '--html' },
     keys = {
       { '<leader>MT', '<cmd>MarpToggle<cr>', desc = '[M]arp [T]oggle' },
       { '<leader>MS', '<cmd>MarpStatus<cr>', desc = '[M]arp [S]tatus' },
