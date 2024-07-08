@@ -221,6 +221,26 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+-- Diagnotic configuration: show LSP and error code
+vim.diagnostic.config {
+  virtual_text = {
+    source = true,
+    format = function(diagnostic)
+      if diagnostic.user_data and diagnostic.user_data.code then
+        return string.format('%s %s', diagnostic.user_data.code, diagnostic.message)
+      else
+        return diagnostic.message
+      end
+    end,
+  },
+  signs = true,
+  float = {
+    header = 'Diagnostics',
+    source = true,
+    border = 'rounded',
+  },
+}
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
