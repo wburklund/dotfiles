@@ -602,7 +602,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        pyright = {
+        basedpyright = {
           capabilities = (function() -- Trim capabilities since we are using Ruff
             local caps = vim.lsp.protocol.make_client_capabilities()
             caps.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 } -- Disable pyright hints
