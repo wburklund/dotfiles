@@ -658,6 +658,12 @@ require('lazy').setup({
         },
 
         html = {},
+        jsonls = {
+          capabilities = (function() -- Add snippet support
+            local caps = vim.lsp.protocol.make_client_capabilities()
+            caps.textDocument.completion.completionItem.snippetSupport = true
+          end)(),
+        },
         texlab = {},
         yamlls = {},
       }
