@@ -891,6 +891,13 @@ require('lazy').setup({
           { name = 'luasnip' },
           { name = 'path' },
         },
+
+        cmp.setup.filetype({ 'sql' }, {
+          sources = {
+            { name = 'vim-dadbod-completion' },
+            { name = 'buffer' },
+          },
+        }),
       }
     end,
   },
