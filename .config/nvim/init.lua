@@ -642,10 +642,6 @@ require('lazy').setup({
         -- tsserver = {},
         --
 
-        html = {},
-
-        texlab = {},
-
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -660,6 +656,10 @@ require('lazy').setup({
             },
           },
         },
+
+        html = {},
+        texlab = {},
+        yamlls = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -901,7 +901,19 @@ require('lazy').setup({
       }
     end,
   },
-
+  {
+    'someone-stole-my-name/yaml-companion.nvim',
+    dependencies = {
+      { 'neovim/nvim-lspconfig' },
+      { 'nvim-lua/plenary.nvim' },
+      { 'nvim-telescope/telescope.nvim' },
+    },
+    config = function(opts)
+      local cfg = require('yaml-companion').setup(opts)
+      require('lspconfig')['yamlls'].setup(cfg)
+      require('telescope').load_extension 'yaml_schema'
+    end,
+  },
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
