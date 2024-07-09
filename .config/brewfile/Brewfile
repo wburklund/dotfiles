@@ -15,6 +15,7 @@ brew "marp-cli"
 brew "ncftp"
 brew "neovim"
 brew "pipx"
+brew "postgresql@16", link: true
 brew "ripgrep"
 brew "spoof-mac"
 brew "telnet"
