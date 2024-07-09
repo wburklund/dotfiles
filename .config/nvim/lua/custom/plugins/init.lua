@@ -4,20 +4,59 @@
 -- See the kickstart.nvim README for more information
 return {
   {
-    'NeogitOrg/neogit',
+    'tpope/vim-fugitive', -- Install Vim Fugitive
+    'kdheepak/lazygit.nvim',
+    cmd = {
+      'LazyGit',
+      'LazyGitConfig',
+      'LazyGitCurrentFile',
+      'LazyGitFilter',
+      'LazyGitFilterCurrentFile',
+    },
+    -- optional for floating window border decoration
     dependencies = {
-      'nvim-lua/plenary.nvim', -- required
-      'sindrets/diffview.nvim', -- optional - Diff integration
-
-      -- Only one of these is needed, not both.
-      'nvim-telescope/telescope.nvim', -- optional
-      -- 'ibhagwan/fzf-lua', -- optional
+      'nvim-lua/plenary.nvim',
     },
     keys = {
-      { '<leader>G', '<cmd>Neogit<cr>', desc = 'Neo[g]it' },
+      { '<leader>G', '<cmd>LazyGit<cr>', desc = 'Lazy[G]it' },
     },
-    config = true,
   },
+  {
+    'crnvl96/lazydocker.nvim',
+    event = 'VeryLazy',
+    opts = {},
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+    },
+    keys = {
+      { '<leader>D', '<cmd>LazyDocker<cr>', desc = 'Lazy[D]ocker' },
+    },
+  },
+  {
+    'kristijanhusak/vim-dadbod-ui',
+    dependencies = {
+      { 'tpope/vim-dadbod', lazy = true },
+      { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
+    },
+    cmd = {
+      'DBUI',
+      'DBUIToggle',
+      'DBUIAddConnection',
+      'DBUIFindBuffer',
+    },
+    init = function()
+      -- Your DBUI configuration
+      vim.g.db_ui_use_nerd_fonts = 1
+    end,
+  }, -- Dadbod SQL client
+  {
+    'mpas/marp-nvim',
+    opts = {},
+    keys = {
+      { '<leader>MT', '<cmd>MarpToggle<cr>', desc = '[M]arp [T]oggle' },
+      { '<leader>MS', '<cmd>MarpStatus<cr>', desc = '[M]arp [S]tatus' },
+    },
+  }, -- Markdown presentation framework
   {
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',

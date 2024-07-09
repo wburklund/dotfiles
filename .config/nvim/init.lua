@@ -1015,15 +1015,6 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  'tpope/vim-fugitive', -- Install Vim Fugitive
-  {
-    'mpas/marp-nvim',
-    opts = {},
-    keys = {
-      { '<leader>MT', '<cmd>MarpToggle<cr>', desc = '[M]arp [T]oggle' },
-      { '<leader>MS', '<cmd>MarpStatus<cr>', desc = '[M]arp [S]tatus' },
-    },
-  }, -- Markdown presentation framework
   {
     'windwp/nvim-ts-autotag',
     branch = 'nvim_0.9',
@@ -1032,23 +1023,6 @@ require('lazy').setup({
       enable_close_on_slash = true,
     },
   }, -- Automate tag handling
-  {
-    'kristijanhusak/vim-dadbod-ui',
-    dependencies = {
-      { 'tpope/vim-dadbod', lazy = true },
-      { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
-    },
-    cmd = {
-      'DBUI',
-      'DBUIToggle',
-      'DBUIAddConnection',
-      'DBUIFindBuffer',
-    },
-    init = function()
-      -- Your DBUI configuration
-      vim.g.db_ui_use_nerd_fonts = 1
-    end,
-  }, -- Dadbod SQL client
   { import = 'custom.plugins' },
 }, {
   ui = {
