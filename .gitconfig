@@ -8,5 +8,7 @@
 	helper = osxkeychain
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[gpg]
+	program = /opt/homebrew/bin/gpg
 [init]
 	defaultBranch = main
