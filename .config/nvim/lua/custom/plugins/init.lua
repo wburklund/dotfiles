@@ -47,7 +47,41 @@ return {
     init = function()
       -- Your DBUI configuration
       vim.g.db_ui_use_nerd_fonts = 1
+
+      -- Override table helpers since the inconsistent capitalization bugs me
+      local basic_constraint_query =
+        [[SELECT tc.constraint_name, tc.table_name, kcu.column_name, ccu.table_name AS foreign_table_name, ccu.column_name AS foreign_column_name, rc.update_rule, rc.delete_rule
+FROM
+     information_schema.table_constraints AS tc
+     JOIN information_schema.key_column_usage AS kcu
+       ON tc.constraint_name = kcu.constraint_name
+     JOIN information_schema.referential_constraints as rc
+       ON tc.constraint_name = rc.constraint_name
+     JOIN information_schema.constraint_column_usage AS ccu
+       ON ccu.constraint_name = tc.constraint_name
+]]
+      local postgres_pk_query = [[SELECT a.attname, format_type(a.atttypid, a.atttypmod) AS data_type, array_position(i.indkey, a.attnum) AS position
+FROM pg_index i
+JOIN   pg_attribute a ON a.attrelid = i.indrelid
+                     AND a.attnum = ANY(i.indkey)
+WHERE  i.indrelid = '{schema}.{table}'::regclass
+AND    i.indisprimary
+ORDER BY position;]]
+
+      vim.g.db_ui_table_helpers = {
+        postgres = {
+          List = 'SELECT * FROM {optional_schema}"{table}" LIMIT 200',
+          Columns = "SELECT * FROM information_schema.columns WHERE table_name = '{table}' AND table_schema = '{schema}'",
+          Indexes = "SELECT * FROM pg_indexes WHERE tablename = '{table}' AND schemaname = '{schema}'",
+          ['Foreign Keys'] = basic_constraint_query .. "WHERE constraint_type = 'FOREIGN KEY'\nAND tc.table_name = '{table}'\nAND tc.table_schema = '{schema}'",
+          ['References'] = basic_constraint_query .. "WHERE constraint_type = 'FOREIGN KEY'\nAND ccu.table_name = '{table}'\nAND tc.table_schema = '{schema}'",
+          ['Primary Keys'] = postgres_pk_query,
+        },
+      }
     end,
+    keys = {
+      { '<leader>S', '<cmd>DBUI<cr>', desc = 'Dadbod [S]QL Client' },
+    },
   }, -- Dadbod SQL client
   {
     'mpas/marp-nvim',
