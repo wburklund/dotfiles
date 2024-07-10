@@ -186,6 +186,12 @@ vim.keymap.set('n', '<leader>T', function()
   end
   vim.cmd.terminal()
 end, { desc = 'Open [T]erminal' })
+vim.keymap.set('n', '<leader>K', function()
+  if vim.api.nvim_buf_get_name(0) ~= '' or vim.api.nvim_tabpage_list_wins(0)[2] ~= nil then
+    vim.cmd 'tabnew'
+  end
+  vim.fn.termopen 'k9s'
+end, { desc = 'Open [k]9s' })
 
 --vim.keymap.set('n', '<leader>T', '<cmd>tab term<cr>', { desc = 'Open [t]erminal tab' })
 
