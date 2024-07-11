@@ -3,8 +3,8 @@
 --
 -- See the kickstart.nvim README for more information
 return {
+  'tpope/vim-fugitive', -- Install Vim Fugitive
   {
-    'tpope/vim-fugitive', -- Install Vim Fugitive
     'kdheepak/lazygit.nvim',
     cmd = {
       'LazyGit',
