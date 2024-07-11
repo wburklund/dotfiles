@@ -158,6 +158,8 @@ ORDER BY position;]]
   {
     'lervag/vimtex',
     lazy = false,
-    init = function() end,
+    init = function()
+      vim.g.vimtex_view_method = 'skim'
+    end,
   },
 }
