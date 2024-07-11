@@ -18,6 +18,7 @@ brew "node"
 brew "marp-cli"
 brew "ncftp"
 brew "neovim"
+brew "neovide"
 brew "pipx"
 brew "postgresql@16", link: true
 brew "ripgrep"
