@@ -155,4 +155,11 @@ ORDER BY position;]]
       end, { desc = '[S]earch Harpoon' })
     end,
   },
+  {
+    'lervag/vimtex',
+    lazy = false,
+    init = function()
+      vim.g.vimtex_view_method = 'zathura'
+    end,
+  },
 }
