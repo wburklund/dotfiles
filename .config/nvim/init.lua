@@ -1102,5 +1102,16 @@ require('lazy').setup({
   },
 })
 
+-- Auto open preview in Oil file browser
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'OilEnter',
+  callback = vim.schedule_wrap(function(args)
+    local oil = require 'oil'
+    if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
+      oil.open_preview()
+    end
+  end),
+})
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
