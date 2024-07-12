@@ -160,14 +160,19 @@ vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.expandtab = true
 
--- Disable Neovide animations
-vim.g.neovide_position_animation_length = 0
-vim.g.neovide_cursor_animation_length = 0.00
-vim.g.neovide_cursor_trail_size = 0
-vim.g.neovide_cursor_animate_in_insert_mode = false
-vim.g.neovide_cursor_animate_command_line = false
-vim.g.neovide_scroll_animation_far_lines = 0
-vim.g.neovide_scroll_animation_length = 0.00
+if vim.g.neovide then
+  -- Disable Neovide animations
+  vim.g.neovide_position_animation_length = 0
+  vim.g.neovide_cursor_animation_length = 0.00
+  vim.g.neovide_cursor_trail_size = 0
+  vim.g.neovide_cursor_animate_in_insert_mode = false
+  vim.g.neovide_cursor_animate_command_line = false
+  vim.g.neovide_scroll_animation_far_lines = 0
+  vim.g.neovide_scroll_animation_length = 0.00
+
+  -- Start with home as working directory
+  vim.api.nvim_set_current_dir '~'
+end
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
