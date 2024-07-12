@@ -102,9 +102,9 @@ ORDER BY position;]]
       local harpoon = require 'harpoon'
       harpoon:setup {}
 
-      vim.keymap.set('n', '<leader>a', function()
+      vim.keymap.set('n', '<C-y>', function()
         harpoon:list():add()
-      end, { desc = '[A]dd Harpoon file' })
+      end, { desc = 'Harpoon add file' })
       vim.keymap.set('n', '<C-[>', function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
       end, { desc = 'Harpoon quick menu' })
