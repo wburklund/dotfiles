@@ -47,6 +47,8 @@ return {
     init = function()
       -- Your DBUI configuration
       vim.g.db_ui_use_nerd_fonts = 1
+      vim.g.db_ui_show_database_icon = 1
+      vim.g.db_ui_disable_mappings = 1 -- Disable default keymaps: customize in after/ftplugin/
 
       -- Override table helpers since the inconsistent capitalization bugs me
       local basic_constraint_query =
