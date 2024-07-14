@@ -612,8 +612,11 @@ require('lazy').setup({
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      local get_capabilities = function()
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        return vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      end
+      local capabilities = get_capabilities()
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -630,7 +633,7 @@ require('lazy').setup({
         -- gopls = {},
         basedpyright = {
           capabilities = (function() -- Trim capabilities since we are using Ruff
-            local caps = vim.lsp.protocol.make_client_capabilities()
+            local caps = get_capabilities()
             caps.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 } -- Disable pyright hints
             return caps
           end)(),
@@ -686,7 +689,7 @@ require('lazy').setup({
         html = {},
         jsonls = {
           capabilities = (function() -- Add snippet support
-            local caps = vim.lsp.protocol.make_client_capabilities()
+            local caps = get_capabilities()
             caps.textDocument.completion.completionItem.snippetSupport = true
           end)(),
         },
