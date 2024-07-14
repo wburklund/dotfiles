@@ -790,12 +790,21 @@ require('lazy').setup({
         mappings = {
           s = false,
           S = false,
+          o = 'system_open',
         },
       },
       filesystem = {
         filtered_items = {
           visible = true,
         },
+      },
+      commands = {
+        system_open = function(state)
+          local node = state.tree:get_node()
+          local path = node:get_id()
+          -- macOs: open file in default application in the background.
+          vim.fn.jobstart({ 'open', '-g', path }, { detach = true })
+        end,
       },
     },
     keys = {
