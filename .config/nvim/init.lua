@@ -776,6 +776,33 @@ require('lazy').setup({
     },
   },
   {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'MunifTanjim/nui.nvim',
+    },
+    opts = {
+      popup_border_style = 'rounded',
+      window = {
+        position = 'float',
+        mappings = {
+          s = false,
+          S = false,
+        },
+      },
+      filesystem = {
+        filtered_items = {
+          visible = true,
+        },
+      },
+    },
+    keys = {
+      { '<leader><C-F>', '<cmd>Neotree<cr>', desc = '[F]ile tree' },
+    },
+  },
+  {
     'stevearc/oil.nvim',
     opts = {
       columns = { 'icon', 'permissions', 'size' },
