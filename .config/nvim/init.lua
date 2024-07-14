@@ -799,7 +799,7 @@ require('lazy').setup({
       },
     },
     keys = {
-      { '<leader><C-F>', '<cmd>Neotree<cr>', desc = '[F]ile tree' },
+      { '<leader>F', '<cmd>Neotree reveal<cr>', desc = '[F]ile tree' },
     },
   },
   {
@@ -816,7 +816,7 @@ require('lazy').setup({
       },
     },
     keys = {
-      { '<leader>F', '<cmd>Oil<cr>', desc = '[F]ile browser' },
+      { '<leader><C-F>', '<cmd>Oil<cr>', desc = '[F]ilesystem browser' },
     },
   },
   { -- Autoformat
