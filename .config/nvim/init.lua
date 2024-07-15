@@ -494,7 +494,7 @@ require('lazy').setup({
       'nvim-telescope/telescope.nvim',
     },
     config = function()
-      local unsavable_filetypes = { 'dbui', 'dbout', 'sql' }
+      local unsavable_filetypes = { 'sql' }
       local close_unsavable_bufs = function()
         local buffers = vim.api.nvim_list_bufs()
         for _, buf in ipairs(buffers) do
