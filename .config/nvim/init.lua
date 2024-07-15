@@ -496,15 +496,13 @@ require('lazy').setup({
     config = function()
       local unsavable_filetypes = { 'dbui', 'dbout', 'sql' }
       local close_unsavable_bufs = function()
-        local tabpages = vim.api.nvim_list_tabpages()
-        for _, tabpage in ipairs(tabpages) do
-          local windows = vim.api.nvim_tabpage_list_wins(tabpage)
-          for _, window in ipairs(windows) do
-            local buffer = vim.api.nvim_win_get_buf(window)
-            local filetype = vim.bo[buffer].filetype
+        local buffers = vim.api.nvim_list_bufs()
+        for _, buf in ipairs(buffers) do
+          if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_is_loaded(buf) then
+            local filetype = vim.bo[buf].filetype
             for _, value in pairs(unsavable_filetypes) do
               if filetype == value then
-                vim.cmd('bd! ' .. buffer)
+                vim.cmd('bd! ' .. buf)
               end
             end
           end
