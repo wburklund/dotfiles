@@ -174,6 +174,8 @@ if vim.g.neovide then
   vim.api.nvim_set_current_dir '~'
 end
 
+vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -476,6 +478,45 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+    end,
+  },
+  {
+    'rmagatti/auto-session',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+    },
+    config = function()
+      local unsavable_filetypes = { 'dbui', 'dbout', 'sql' }
+      local close_unsavable_bufs = function()
+        local tabpages = vim.api.nvim_list_tabpages()
+        for _, tabpage in ipairs(tabpages) do
+          local windows = vim.api.nvim_tabpage_list_wins(tabpage)
+          for _, window in ipairs(windows) do
+            local buffer = vim.api.nvim_win_get_buf(window)
+            local filetype = vim.bo[buffer].filetype
+            for _, value in pairs(unsavable_filetypes) do
+              if filetype == value then
+                vim.cmd('bd! ' .. buffer)
+              end
+            end
+          end
+        end
+      end
+      require('auto-session').setup {
+        log_level = 'error',
+        auto_session_suppress_dirs = { '~/', '~/Downloads', '/' },
+
+        -- ⚠️ This will only work if Telescope.nvim is installed
+        -- The following are already the default values, no need to provide them if these are already the settings you want.
+        session_lens = {
+          -- If load_on_setup is set to false, one needs to eventually call `require("auto-session").setup_session_lens()` if they want to use session-lens.
+          load_on_setup = true,
+          theme_conf = { border = true },
+          previewer = true,
+        },
+      }
+      vim.keymap.set('n', '<leader><C-s>', require('auto-session.session-lens').search_session)
+      vim.g.auto_session_pre_save_cmds = { close_unsavable_bufs }
     end,
   },
   { -- LSP Configuration & Plugins
