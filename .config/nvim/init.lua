@@ -813,9 +813,6 @@ require('lazy').setup({
         },
       }
     end,
-    keys = {
-      { '<leader>Pv', '<cmd>VenvSelect<cr>', desc = '[P]ython [v]env select' },
-    },
   },
   {
     'nvim-neo-tree/neo-tree.nvim',
