@@ -505,6 +505,7 @@ require('lazy').setup({
       require('auto-session').setup {
         log_level = 'error',
         auto_session_suppress_dirs = { '~/', '~/Downloads', '/' },
+        auto_session_enable_last_session = true,
 
         -- ⚠️ This will only work if Telescope.nvim is installed
         -- The following are already the default values, no need to provide them if these are already the settings you want.
@@ -1235,6 +1236,8 @@ vim.api.nvim_create_autocmd('User', {
     end
   end),
 })
+
+vim.cmd.SessionRestore()
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
