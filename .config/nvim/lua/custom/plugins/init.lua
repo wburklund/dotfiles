@@ -131,7 +131,10 @@ return {
       'nvim-telescope/telescope.nvim',
       'nvim-tree/nvim-web-devicons',
     },
-    config = true,
+    opts = {
+      enable_builtin = true,
+      default_to_projects_v2 = true,
+    },
   },
   {
     'benlubas/molten-nvim',
