@@ -269,6 +269,9 @@ vim.diagnostic.config {
   },
 }
 
+-- Configure venv for Molten
+vim.g.python3_host_prog = vim.fn.expand '~/venvs/neovim.venv/bin/python3'
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run

@@ -1,4 +1,6 @@
 cairosvg
+ipykernel
+jupyter
 jupyter_client
 kaleido
 neovim
