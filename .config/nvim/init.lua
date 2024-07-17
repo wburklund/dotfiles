@@ -576,7 +576,7 @@ ORDER BY position;]]
           previewer = false,
         },
       }
-      vim.keymap.set('n', '<leader><C-s>', require('auto-session.session-lens').search_session, { desc = '[S]ession selector' })
+      vim.keymap.set('n', '<C-s>', require('auto-session.session-lens').search_session, { desc = '[S]ession selector' })
       vim.g.auto_session_pre_save_cmds = { close_unsavable_bufs }
     end,
   },
