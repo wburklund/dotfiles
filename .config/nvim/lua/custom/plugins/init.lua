@@ -131,10 +131,15 @@ return {
       'nvim-telescope/telescope.nvim',
       'nvim-tree/nvim-web-devicons',
     },
-    opts = {
-      enable_builtin = true,
-      default_to_projects_v2 = true,
-    },
+    config = function()
+      require('octo').setup {
+        enable_builtin = true,
+        default_to_projects_v2 = true,
+      }
+
+      -- Use treesitter markdown parser with octo buffers
+      vim.treesitter.language.register('markdown', 'octo')
+    end,
   },
   {
     'benlubas/molten-nvim',

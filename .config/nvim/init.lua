@@ -548,7 +548,7 @@ ORDER BY position;]]
       'kristijanhusak/vim-dadbod-ui',
     },
     config = function()
-      local unsavable_filetypes = { 'sql' }
+      local unsavable_filetypes = { 'sql', 'octo' }
       local close_unsavable_bufs = function()
         local buffers = vim.api.nvim_list_bufs()
         for _, buf in ipairs(buffers) do
