@@ -3,3 +3,6 @@ commandTemplates:
   up: "{{ .DockerCompose }} up --build -d"
 gui:
   returnImmediately: true
+keybinding:
+  universal:
+    return: q
