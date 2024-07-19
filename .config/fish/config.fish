@@ -5,4 +5,5 @@ end
 set -gx HOMEBREW_BUNDLE_FILE ~/.config/brewfile/Brewfile
 set -gx AWS_CLI_AUTO_PROMPT on-partial
 set -gx AWS_PAGER
+set -gx AWS_DEFAULT_OUTPUT table
 
