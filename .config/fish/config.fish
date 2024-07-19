@@ -3,4 +3,5 @@ if status is-interactive
 end
 
 set -gx HOMEBREW_BUNDLE_FILE ~/.config/brewfile/Brewfile
+set -gx AWS_CLI_AUTO_PROMPT on-partial
 
