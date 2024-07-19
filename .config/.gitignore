@@ -2,3 +2,4 @@ Brewfile/Brewfile.lock.json
 fish/*
 !fish/config.fish
 !fish/fish_variables
+!fish/completions/
