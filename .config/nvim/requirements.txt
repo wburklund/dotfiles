@@ -1,4 +1,5 @@
 cairosvg
+databricks-connect
 ipykernel
 jupyter
 jupyter_client
