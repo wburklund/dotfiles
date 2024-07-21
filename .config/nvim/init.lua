@@ -1010,6 +1010,8 @@ ORDER BY position;]]
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+
+      'MattiasMTS/cmp-dbee',
     },
     config = function()
       -- See `:help cmp`
@@ -1085,7 +1087,8 @@ ORDER BY position;]]
 
         cmp.setup.filetype({ 'sql' }, {
           sources = {
-            { name = 'vim-dadbod-completion' },
+            -- { name = 'vim-dadbod-completion' },
+            { name = 'cmp-dbee' },
             { name = 'buffer' },
           },
         }),

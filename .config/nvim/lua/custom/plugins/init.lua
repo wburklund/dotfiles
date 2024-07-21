@@ -282,4 +282,68 @@ return {
       vim.g.molten_output_win_max_height = 12
     end,
   },
+  {
+    'kndndrj/nvim-dbee',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+    },
+    build = function()
+      -- Install tries to automatically detect the install method.
+      -- if it fails, try calling it with one of these parameters:
+      --    "curl", "wget", "bitsadmin", "go"
+      require('dbee').install()
+    end,
+    config = function() -- Override table helpers since the inconsistent capitalization bugs me
+      local basic_constraint_query =
+        [[SELECT tc.constraint_name, tc.table_name, kcu.column_name, ccu.table_name AS foreign_table_name, ccu.column_name AS foreign_column_name, rc.update_rule, rc.delete_rule
+FROM
+     information_schema.table_constraints AS tc
+     JOIN information_schema.key_column_usage AS kcu
+       ON tc.constraint_name = kcu.constraint_name
+     JOIN information_schema.referential_constraints as rc
+       ON tc.constraint_name = rc.constraint_name
+     JOIN information_schema.constraint_column_usage AS ccu
+       ON ccu.constraint_name = tc.constraint_name
+]]
+
+      local postgres_pk_query = [[SELECT tc.constraint_name, tc.table_name, kcu.column_name, kcu.ordinal_position
+FROM
+information_schema.table_constraints AS tc
+  JOIN information_schema.key_column_usage AS kcu
+    ON tc.constraint_name = kcu.constraint_name
+  WHERE tc."table_schema" = '{{ .Schema }}' AND tc."table_name" = '{{ .Table }}'
+    AND tc.constraint_type = 'PRIMARY KEY'
+]]
+
+      require('dbee').setup {
+        extra_helpers = {
+          postgres = {
+            List = 'SELECT * FROM {{ .Schema }}.{{ .Table }} LIMIT 500',
+            Columns = "SELECT * FROM information_schema.Columns WHERE table_schema = '{{ .Schema }}' AND table_name = '{{ .Table }}'",
+            Indexes = "SELECT * FROM pg_indexes WHERE schemaname = '{{ .Schema }}' AND tablename = {{ .Table }}",
+            ['Primary Keys'] = postgres_pk_query,
+            ['Foreign Keys'] = basic_constraint_query
+              .. "WHERE constraint_type = 'FOREIGN KEY' AND tc.table_schema = '{{ .Schema }}' AND tc.table_name = '{{ .Table }}'",
+            ['References'] = basic_constraint_query
+              .. "WHERE constraint_type = 'FOREIGN KEY' AND ccu.table_schema = '{{ .Schema }}' AND ccu.table_name = '{{ .Table }}'",
+          },
+        },
+      }
+    end,
+  },
+  {
+    'MattiasMTS/cmp-dbee',
+    dependencies = {
+      { 'kndndrj/nvim-dbee' },
+    },
+    ft = 'sql',
+    config = function()
+      require('cmp-dbee').setup()
+      -- I like capitalized SQL keywords
+      local sql_keywords = require('cmp-dbee.constants').reserved_sql_keywords
+      for _, item in pairs(sql_keywords) do
+        item.name = string.upper(item.name)
+      end
+    end,
+  },
 }

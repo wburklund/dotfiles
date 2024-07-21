@@ -1,3 +1,4 @@
+.DS_STORE
 Brewfile/Brewfile.lock.json
 fish/*
 !fish/config.fish
