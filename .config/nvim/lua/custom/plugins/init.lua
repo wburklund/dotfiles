@@ -251,6 +251,12 @@ information_schema.table_constraints AS tc
     AND tc.constraint_type = 'PRIMARY KEY'
 ]]
 
+      local map_opts = function(opts)
+        opts.noremap = true
+        opts.nowait = true
+        return opts
+      end
+
       require('dbee').setup {
         extra_helpers = {
           postgres = {
@@ -260,12 +266,49 @@ information_schema.table_constraints AS tc
             ['Primary Keys'] = postgres_pk_query,
             ['Foreign Keys'] = basic_constraint_query
               .. "WHERE constraint_type = 'FOREIGN KEY' AND tc.table_schema = '{{ .Schema }}' AND tc.table_name = '{{ .Table }}'",
-            ['References'] = basic_constraint_query
+            References = basic_constraint_query
               .. "WHERE constraint_type = 'FOREIGN KEY' AND ccu.table_schema = '{{ .Schema }}' AND ccu.table_name = '{{ .Table }}'",
+          },
+        },
+        drawer = {
+          mappings = {
+            { key = 'r', mode = 'n', action = 'refresh', opts = map_opts { desc = '[R]efresh' } },
+            { key = '<cr>', mode = 'n', action = 'action_1', opts = map_opts { desc = 'Open/execute' } },
+            { key = 'e', mode = 'n', action = 'action_2', opts = map_opts { desc = 'R[e]name/s[e]t connection as active' } },
+            { key = 'd', mode = 'n', action = 'action_3', opts = map_opts { desc = '[D]elete' } },
+            { key = '<space>', mode = 'n', action = 'toggle', opts = map_opts { desc = 'Toggle' } },
+            { key = '<cr>', mode = 'n', action = 'menu_confirm', opts = map_opts { desc = 'Menu confirm' } },
+            { key = 'y', mode = 'n', action = 'menu_yank', opts = map_opts { desc = 'Menu yank' } },
+            { key = '<esc>', mode = 'n', action = 'menu_close', opts = map_opts { desc = 'Menu close' } },
+          },
+        },
+        editor = {
+          mappings = {
+            { key = '<C-r>', mode = 'x', action = 'run_selection', opts = map_opts { desc = '[R]un selection' } },
+            { key = '<C-r>', mode = 'n', action = 'run_file', opts = map_opts { desc = '[R]un all' } },
+          },
+        },
+        result = {
+          mappings = {
+            -- next/previous page
+            { key = '[p', mode = '', action = 'page_prev', opts = map_opts { desc = 'Previous [p]age' } },
+            { key = ']p', mode = '', action = 'page_next', opts = map_opts { desc = 'Next [p]age' } },
+            { key = '[P', mode = '', action = 'page_first', opts = map_opts { desc = 'First [p]age' } },
+            { key = ']P', mode = '', action = 'page_last', opts = map_opts { desc = 'Last [p]age' } },
+            -- yank rows as csv/json
+            { key = 'yaj', mode = 'n', action = 'yank_current_json', opts = map_opts { desc = '[Y]ank [a]round [J]SON' } },
+            { key = 'yaJ', mode = '', action = 'yank_all_json', opts = map_opts { desc = '[Y]ank [a]ll [J]SON' } },
+            { key = 'yac', mode = 'n', action = 'yank_current_csv', opts = map_opts { desc = '[Y]ank [a]round [C]SV' } },
+            { key = 'yaC', mode = '', action = 'yank_all_csv', opts = map_opts { desc = '[Y]ank [a]ll [C]SV' } },
+            -- cancel current call execution
+            { key = '<C-c>', mode = '', action = 'cancel_call', opts = map_opts { desc = '[C]ancel current execution' } },
           },
         },
       }
     end,
+    keys = {
+      { '<leader>S', '<cmd>Dbee<cr>', desc = 'DBee [S]QL client' },
+    },
   },
   {
     'MattiasMTS/cmp-dbee',
