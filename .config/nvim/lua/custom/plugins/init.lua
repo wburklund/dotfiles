@@ -276,7 +276,7 @@ information_schema.table_constraints AS tc
             { key = '<cr>', mode = 'n', action = 'action_1', opts = map_opts { desc = 'Open/execute' } },
             { key = 'e', mode = 'n', action = 'action_2', opts = map_opts { desc = 'R[e]name/s[e]t connection as active' } },
             { key = 'd', mode = 'n', action = 'action_3', opts = map_opts { desc = '[D]elete' } },
-            { key = '<space>', mode = 'n', action = 'toggle', opts = map_opts { desc = 'Toggle' } },
+            { key = 't', mode = 'n', action = 'toggle', opts = map_opts { desc = '[T]oggle' } },
             { key = '<cr>', mode = 'n', action = 'menu_confirm', opts = map_opts { desc = 'Menu confirm' } },
             { key = 'y', mode = 'n', action = 'menu_yank', opts = map_opts { desc = 'Menu yank' } },
             { key = '<esc>', mode = 'n', action = 'menu_close', opts = map_opts { desc = 'Menu close' } },
