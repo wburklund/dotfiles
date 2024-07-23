@@ -296,10 +296,12 @@ information_schema.table_constraints AS tc
             { key = '[P', mode = '', action = 'page_first', opts = map_opts { desc = 'First [p]age' } },
             { key = ']P', mode = '', action = 'page_last', opts = map_opts { desc = 'Last [p]age' } },
             -- yank rows as csv/json
-            { key = 'yaj', mode = 'n', action = 'yank_current_json', opts = map_opts { desc = '[Y]ank [a]round [J]SON' } },
-            { key = 'yaJ', mode = '', action = 'yank_all_json', opts = map_opts { desc = '[Y]ank [a]ll [J]SON' } },
-            { key = 'yac', mode = 'n', action = 'yank_current_csv', opts = map_opts { desc = '[Y]ank [a]round [C]SV' } },
-            { key = 'yaC', mode = '', action = 'yank_all_csv', opts = map_opts { desc = '[Y]ank [a]ll [C]SV' } },
+            { key = '<C-y>j', mode = 'n', action = 'yank_current_json', opts = map_opts { desc = '[Y]ank row [J]SON' } },
+            { key = '<C-y>j', mode = 'x', action = 'yank_selection_json', opts = map_opts { desc = '[Y]ank selection [J]SON' } },
+            { key = '<C-y>J', mode = 'n', action = 'yank_all_json', opts = map_opts { desc = '[Y]ank all [J]SON' } },
+            { key = '<C-y>c', mode = 'n', action = 'yank_current_csv', opts = map_opts { desc = '[Y]ank row [C]SV' } },
+            { key = '<C-y>c', mode = 'x', action = 'yank_selection_csv', opts = map_opts { desc = '[Y]ank selection [C]SV' } },
+            { key = '<C-y>C', mode = 'n', action = 'yank_all_csv', opts = map_opts { desc = '[Y]ank all [C]SV' } },
             -- cancel current call execution
             { key = '<C-c>', mode = '', action = 'cancel_call', opts = map_opts { desc = '[C]ancel current execution' } },
           },
