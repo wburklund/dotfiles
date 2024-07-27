@@ -207,6 +207,9 @@ vim.keymap.set('n', '<leader>K', function()
     vim.cmd 'tabnew'
   end
   vim.fn.termopen 'k9s'
+  vim.keymap.set('t', '<Esc>q', function()
+    vim.api.nvim_feedkeys(vim.api.nvim_eval '"\\<esc>"', 'n', true)
+  end, { desc = 'K9s Back/Clear', buffer = true })
 end, { desc = 'Open [k]9s' })
 
 --vim.keymap.set('n', '<leader>T', '<cmd>tab term<cr>', { desc = 'Open [t]erminal tab' })
