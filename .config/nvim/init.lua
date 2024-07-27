@@ -207,6 +207,10 @@ vim.keymap.set('n', '<leader>K', function()
     vim.cmd 'tabnew'
   end
   vim.fn.termopen 'k9s'
+  vim.keymap.set('n', '<Esc>q', function()
+    vim.api.nvim_feedkeys('i', 'n', true)
+    vim.api.nvim_feedkeys(vim.api.nvim_eval '"\\<esc>"', 'n', true)
+  end, { desc = 'K9s Back/Clear', buffer = true })
   vim.keymap.set('t', '<Esc>q', function()
     vim.api.nvim_feedkeys(vim.api.nvim_eval '"\\<esc>"', 'n', true)
   end, { desc = 'K9s Back/Clear', buffer = true })
@@ -582,6 +586,12 @@ ORDER BY position;]]
         log_level = 'error',
         auto_session_suppress_dirs = { '~/', '~/Downloads', '/' },
         auto_session_enable_last_session = true,
+
+        cwd_change_handling = {
+          post_cwd_changed_hook = function()
+            require('lualine').refresh()
+          end,
+        },
 
         -- ⚠️ This will only work if Telescope.nvim is installed
         -- The following are already the default values, no need to provide them if these are already the settings you want.
