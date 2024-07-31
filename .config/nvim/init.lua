@@ -239,8 +239,6 @@ vim.api.nvim_create_autocmd('TermOpen', {
 
     local function cmds(table, prefix)
       for k, v in pairs(table) do
-        local keymap = prefix .. k
-
         -- Register group name in which-key
         if k == 1 then
           wk.add {
@@ -251,12 +249,12 @@ vim.api.nvim_create_autocmd('TermOpen', {
         elseif type(v) == 'string' then
           local cmd = 'aws ' .. v
           wk.add {
-            { keymap, 'i' .. cmd .. '<cr>', buffer = true, desc = cmd },
+            { prefix .. k, 'i' .. cmd .. '<cr>', buffer = true, desc = cmd },
           }
 
         -- Recur into subtables
         elseif type(v) == 'table' then
-          cmds(v, keymap)
+          cmds(v, prefix .. k)
         end
       end
     end
