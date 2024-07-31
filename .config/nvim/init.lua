@@ -1,4 +1,4 @@
---[[
+--[[i
 
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
@@ -195,7 +195,7 @@ vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Open [d]i
 --
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 vim.keymap.set('n', '<leader>T', function()
   if vim.api.nvim_buf_get_name(0) ~= '' or vim.api.nvim_tabpage_list_wins(0)[2] ~= nil then
     vim.cmd 'tabnew'
@@ -215,6 +215,55 @@ vim.keymap.set('n', '<leader>K', function()
     vim.api.nvim_feedkeys(vim.api.nvim_eval '"\\<esc>"', 'n', true)
   end, { desc = 'K9s Back/Clear', buffer = true })
 end, { desc = 'Open [k]9s' })
+
+-- Terminal keybinds for awless clone
+
+-- Command table
+
+local aws_commands = {
+  '[A]WS',
+  c = {
+    'A[C]M',
+    c = {
+      '[C]ertificate',
+      g = 'acm describe-certificate',
+      l = 'acm list-certificates',
+    },
+  },
+}
+
+-- Register AWS commands upon opening a terminal
+vim.api.nvim_create_autocmd('TermOpen', {
+  callback = function()
+    local wk = require 'which-key'
+
+    local function cmds(table, prefix)
+      for k, v in pairs(table) do
+        local keymap = prefix .. k
+
+        -- Register which-key group for documentation
+        if k == 1 then
+          wk.add {
+            { prefix, group = v, buffer = true },
+          }
+
+        -- Register command
+        elseif type(v) == 'string' then
+          local cmd = 'aws ' .. v
+          wk.add {
+            { keymap, 'i' .. cmd .. '<cr>', buffer = true, desc = cmd },
+          }
+
+        -- Recur into subtables
+        elseif type(v) == 'table' then
+          cmds(v, keymap)
+        end
+      end
+    end
+
+    cmds(aws_commands, '<localleader>a')
+  end,
+})
 
 --vim.keymap.set('n', '<leader>T', '<cmd>tab term<cr>', { desc = 'Open [t]erminal tab' })
 
@@ -348,17 +397,11 @@ require('lazy').setup({
       require('which-key').setup {
         spec = {
           { '<leader>M', group = '[M]arp' },
-          { '<leader>M_', hidden = true },
           { '<leader>c', group = '[C]ode' },
-          { '<leader>c_', hidden = true },
           { '<leader>s', group = '[S]earch' },
-          { '<leader>s_', hidden = true },
           { '<leader>t', group = '[T]oggle' },
-          { '<leader>t_', hidden = true },
           { '<leader>d', group = '[D]iagnostic' },
-          { '<leader>d_', hidden = true },
           { '<leader>H', group = 'Git[H]ub' },
-          { '<leader>H_', hidden = true },
           {
             '<localleader>?',
             function()
