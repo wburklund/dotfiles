@@ -241,7 +241,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
       for k, v in pairs(table) do
         local keymap = prefix .. k
 
-        -- Register which-key group for documentation
+        -- Register group name in which-key
         if k == 1 then
           wk.add {
             { prefix, group = v, buffer = true },
