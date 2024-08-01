@@ -230,6 +230,269 @@ local aws_commands = {
       l = 'acm list-certificates',
     },
   },
+  e = {
+    '[E]C2',
+    a = {
+      'Elastic IP [A]ddress',
+      l = 'ec2 describe-addresses',
+    },
+    i = {
+      '[I]nstance',
+      l = 'ec2 describe-instances',
+    },
+    k = {
+      '[K]eypair',
+      l = 'ec2 describe-key-pairs',
+    },
+    n = {
+      '[N]etwork Interface',
+      l = 'ec2 describe-network-interfaces',
+    },
+    s = {
+      '[S]ecurity Group',
+      l = 'ec2 describe-security-groups',
+    },
+    ['<C-s>'] = {
+      '[S]napshot',
+      l = 'ec2 describe-snapshots',
+    },
+    v = {
+      '[V]olume',
+      l = 'ec2 describe-volumes',
+    },
+    g = {
+      'Internet [G]ateway',
+      l = 'ec2 describe-internet-gateways',
+    },
+    G = {
+      'NAT [G]ateway',
+      l = 'ec2 describe-nat-gateways',
+    },
+    z = {
+      'Availability [Z]one',
+      l = 'ec2 describe-availability-zones',
+    },
+    l = {
+      'Elastic [L]oad Balancing',
+      b = {
+        'Load [B]alancer',
+        l = 'elb describe-load-balancers',
+      },
+    },
+    L = {
+      'Elastic [L]oad Balancing V2',
+      b = {
+        'Load [B]alancer',
+        g = 'elbv2 describe-load-balancer-attributes',
+        l = 'elbv2 describe-load-balancers',
+      },
+      l = {
+        '[L]istener',
+        l = 'elbv2 describe-listeners',
+      },
+      t = {
+        '[T]arget Group',
+        g = 'elbv2 describe-target-group-attributes',
+        l = 'elbv2 describe-target-groups',
+      },
+    },
+    S = {
+      'EC2 Auto[s]caling',
+      c = {
+        '[C]onfiguration',
+        l = 'autoscaling describe-launch-configurations',
+      },
+      g = {
+        '[G]roup',
+        l = 'autoscaling describe-auto-scaling-groups',
+      },
+      p = {
+        '[P]olicy',
+        l = 'autoscaling describe-policies',
+      },
+    },
+  },
+  E = {
+    '[E]CS/[E]CR',
+    r = {
+      '[R]epository',
+      l = 'ecr describe-repositories',
+    },
+    c = {
+      '[C]luster',
+      l = 'ecs list-clusters',
+      L = 'ecs describe-clusters',
+    },
+    s = {
+      '[S]ervice',
+      l = 'ecs list-services',
+      L = 'ecs describe-services',
+    },
+    d = {
+      'Task [D]efinition',
+      g = 'ecs describe-task-definition',
+      l = 'ecs list-task-definitions',
+    },
+    t = {
+      '[T]ask',
+      l = 'ecs list-tasks',
+      L = 'ecs describe-tasks',
+    },
+  },
+  f = {
+    'Cloud[F]ormation',
+    s = {
+      '[S]tack',
+      l = 'cloudformation list-stacks',
+      L = 'cloudformation describe-stacks',
+    },
+  },
+  F = {
+    'Cloud[F]ront',
+    g = 'cloudfront get-distribution',
+    l = 'cloudfront list-distributions',
+  },
+  i = {
+    '[I]AM',
+    u = {
+      '[U]ser',
+      g = 'iam get-user',
+      l = 'iam list-users',
+    },
+    g = {
+      '[G]roup',
+      g = 'iam get-group',
+      l = 'iam list-groups',
+    },
+    r = {
+      '[R]ole',
+      g = 'iam get-role',
+      l = 'iam list-roles',
+    },
+    p = {
+      '[P]olicy',
+      g = 'iam get-policy',
+      l = 'iam list-policies',
+    },
+    k = {
+      '[K]ey',
+      l = 'iam list-access-keys',
+    },
+    i = {
+      '[I]nstance Profile',
+      g = 'iam get-instance-profile',
+      l = 'iam list-instance-profiles',
+    },
+    m = {
+      '[M]FA Device',
+      g = 'iam get-mfa-device',
+      l = 'iam list-mfa-devices',
+    },
+  },
+  l = {
+    '[L]ambda',
+    f = {
+      '[F]unction',
+      g = 'lambda get-function',
+      l = 'lambda list-functions',
+    },
+  },
+  r = {
+    '[R]DS',
+    d = {
+      '[D]B Instance',
+      l = 'rds desribe-db-instances',
+    },
+    s = {
+      '[S]ubnet Group',
+      l = 'rds describe-db-subnet-groups',
+    },
+  },
+  R = {
+    '[R]oute 53',
+    r = {
+      '[R]ecord Set',
+      l = 'route53 list-resource-record-sets',
+    },
+    z = {
+      'Hosted [Z]one',
+      g = 'route53 get-hosted-zone',
+      l = 'route53 list-hosted-zones',
+    },
+  },
+  s = {
+    '[S]3',
+    b = {
+      '[B]ucket',
+      l = 's3api list-buckets',
+    },
+    o = {
+      '[O]bject',
+      g = 's3api get-object',
+      l = 's3api list-objects',
+      L = 's3api list-objects-v2',
+    },
+  },
+  S = {
+    '[S]NS/[S]QS',
+    s = {
+      '[S]ubscription',
+      g = 'sns get-subscription-attributes',
+      l = 'sns list-subscriptions',
+    },
+    t = {
+      '[T]opic',
+      g = 'sns get-topic-attributes',
+      l = 'sns list-topics',
+    },
+    q = {
+      '[Q]ueue',
+      g = 'sqs get-queue-attributes',
+      l = 'sqs list-queues',
+    },
+  },
+  v = {
+    '[V]PC',
+    v = {
+      '[V]PC',
+      l = 'ec2 describe-vpcs',
+    },
+    s = {
+      '[S]ubnet',
+      l = 'ec2 describe-subnets',
+    },
+    t = {
+      'Route [T]able',
+      l = 'ec2 describe-route-tables',
+    },
+  },
+  w = {
+    'Cloud[W]atch',
+    a = {
+      '[A]larm',
+      l = 'cloudwatch describe-alarms',
+    },
+    l = {
+      '[L]og',
+      e = {
+        '[E]vent',
+        l = 'logs filter-log-events',
+      },
+      g = {
+        '[G]roup',
+        l = 'logs describe-log-groups',
+      },
+      s = {
+        '[S]tream',
+        l = 'logs describe-log-streams',
+      },
+    },
+    m = {
+      '[M]etric',
+      g = 'cloudwatch get-metric-data',
+      l = 'cloudwatch list-metrics',
+    },
+  },
 }
 
 -- Register AWS commands upon opening a terminal
@@ -263,7 +526,10 @@ vim.api.nvim_create_autocmd('TermOpen', {
   end,
 })
 
---vim.keymap.set('n', '<leader>T', '<cmd>tab term<cr>', { desc = 'Open [t]erminal tab' })
+vim.keymap.set('n', '<C-T>', function()
+  ---@diagnostic disable-next-line: param-type-mismatch
+  print(os.time(os.date '!*t'))
+end, { desc = 'UNIX [T]imestamp (UTC)' })
 
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
