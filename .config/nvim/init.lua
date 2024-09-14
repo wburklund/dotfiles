@@ -1125,6 +1125,7 @@ ORDER BY position;]]
             },
           },
         },
+        gopls = {},
 
         html = {},
         jsonls = {
