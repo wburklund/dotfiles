@@ -96,5 +96,8 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
+
+    vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
+    vim.fn.sign_define('DapStopped', { text = '▶️', texthl = '', linehl = '', numhl = '' })
   end,
 }
