@@ -870,52 +870,6 @@ ORDER BY position;]]
       { '<leader>S', '<cmd>DBUI<cr>', desc = 'Dadbod [S]QL Client' },
     },
   }, -- Dadbod SQL client
-
-  {
-    'rmagatti/auto-session',
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-      'kristijanhusak/vim-dadbod-ui',
-    },
-    config = function()
-      local unsavable_filetypes = { 'sql', 'octo' }
-      local close_unsavable_bufs = function()
-        local buffers = vim.api.nvim_list_bufs()
-        for _, buf in ipairs(buffers) do
-          if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_is_loaded(buf) then
-            local filetype = vim.bo[buf].filetype
-            for _, value in pairs(unsavable_filetypes) do
-              if filetype == value then
-                vim.cmd('bd! ' .. buf)
-              end
-            end
-          end
-        end
-      end
-      require('auto-session').setup {
-        log_level = 'error',
-        auto_session_suppress_dirs = { '~/', '~/Downloads', '/' },
-        auto_session_enable_last_session = true,
-
-        cwd_change_handling = {
-          post_cwd_changed_hook = function()
-            require('lualine').refresh()
-          end,
-        },
-
-        -- ⚠️ This will only work if Telescope.nvim is installed
-        -- The following are already the default values, no need to provide them if these are already the settings you want.
-        session_lens = {
-          -- If load_on_setup is set to false, one needs to eventually call `require("auto-session").setup_session_lens()` if they want to use session-lens.
-          load_on_setup = true,
-          theme_conf = { border = true },
-          previewer = false,
-        },
-      }
-      vim.keymap.set('n', '<C-s>', require('auto-session.session-lens').search_session, { desc = '[S]ession selector' })
-      vim.g.auto_session_pre_save_cmds = { close_unsavable_bufs }
-    end,
-  },
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -1636,8 +1590,6 @@ vim.api.nvim_create_autocmd('User', {
     end
   end),
 })
-
-vim.cmd.SessionRestore()
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

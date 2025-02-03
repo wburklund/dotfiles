@@ -1,6 +1,7 @@
 .DS_STORE
 Brewfile/Brewfile.lock.json
 fish/*
+gramps/*
 !fish/config.fish
 !fish/fish_variables
 !fish/completions/
