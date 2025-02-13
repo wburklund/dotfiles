@@ -1035,7 +1035,16 @@ ORDER BY position;]]
             basedpyright = {
               disableOrganizeImports = true, -- Let Ruff handle import sorting
               analysis = {
-                ignore = { '*' }, -- Disable basedpyright diagnostic messages in favor of Ruff's
+                diagnosticSeverityOverrides = { -- Disable basedpyright diagnostic messages in favor of Ruff's
+                  reportAny = false,
+                  reportMissingTypeArgument = false,
+                  reportMissingTypeStubs = false,
+                  reportUnknownArgumentType = false,
+                  reportUnknownMemberType = false,
+                  reportUnknownParameterType = false,
+                  reportUnknownVariableType = false,
+                  reportUnusedImport = false,
+                },
               },
             },
           },
