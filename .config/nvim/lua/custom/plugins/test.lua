@@ -24,70 +24,63 @@ return {
         function()
           require('neotest').run.run(vim.fn.expand '%')
         end,
-        desc = 'Run File (Neotest)',
+        desc = 'Neo[T]est Run File [T]ests',
       },
       {
         '<leader>tT',
         function()
           require('neotest').run.run(vim.uv.cwd())
         end,
-        desc = 'Run All Test Files (Neotest)',
+        desc = 'Neo[T]est Run All [T]ests',
       },
       {
         '<leader>tr',
         function()
           require('neotest').run.run()
         end,
-        desc = 'Run Nearest (Neotest)',
+        desc = 'Neo[T]est [R]un Nearest',
       },
       {
         '<leader>tl',
         function()
           require('neotest').run.run_last()
         end,
-        desc = 'Run Last (Neotest)',
+        desc = 'Neo[T]est Run [L]ast',
       },
       {
-        '<leader>ts',
+        '<leader>tS',
         function()
           require('neotest').summary.toggle()
         end,
-        desc = 'Toggle Summary (Neotest)',
-      },
-      {
-        '<leader>to',
-        function()
-          require('neotest').output.open { enter = true, auto_close = true }
-        end,
-        desc = 'Show Output (Neotest)',
+        desc = 'Neo[T]est Toggle [S]ummary',
       },
       {
         '<leader>tO',
         function()
           require('neotest').output_panel.toggle()
         end,
-        desc = 'Toggle Output Panel (Neotest)',
+        desc = 'Neo[T]est Toggle [O]utput Panel',
       },
       {
-        '<leader>tS',
+        '<leader>ts',
         function()
           require('neotest').run.stop()
         end,
-        desc = 'Stop (Neotest)',
+        desc = 'Neo[T]est [S]top',
       },
       {
         '<leader>tw',
         function()
           require('neotest').watch.toggle(vim.fn.expand '%')
         end,
-        desc = 'Toggle Watch (Neotest)',
+        desc = 'Neo[T]est Toggle [W]atch',
       },
       {
         '<leader>td',
         function()
           require('neotest').run.run { strategy = 'dap' }
         end,
-        desc = 'Debug Nearest',
+        desc = 'Neo[T]est [D]ebug Nearest',
       },
     },
   },
