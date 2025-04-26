@@ -663,7 +663,7 @@ require('lazy').setup({
           { '<leader>M', group = '[M]arp' },
           { '<leader>c', group = '[C]ode' },
           { '<leader>s', group = '[S]earch' },
-          { '<leader>t', group = '[T]oggle' },
+          { '<leader>t', group = 'Neo[T]est' },
           { '<leader>d', group = '[D]iagnostic' },
           { '<leader>H', group = 'Git[H]ub' },
           {
