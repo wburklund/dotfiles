@@ -22,7 +22,7 @@ vim.g.have_nerd_font = true
 vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
---vim.opt.showmode = false
+vim.opt.showmode = false
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -222,6 +222,9 @@ vim.pack.add {
   'https://github.com/MattiasMTS/cmp-dbee',
   'https://github.com/hrsh7th/nvim-cmp',
 
+  -- Formatting
+  'https://github.com/stevearc/conform.nvim',
+
   -- Which-key
   'https://github.com/folke/which-key.nvim',
 }
@@ -342,14 +345,6 @@ vim.diagnostic.config {
   },
 }
 
--- Format on save
-vim.api.nvim_create_autocmd('BufWritePre', {
-  group = vim.api.nvim_create_augroup('lsp-format', { clear = false }),
-  callback = function()
-    vim.lsp.buf.format { async = false }
-  end,
-})
-
 -- Highlights, inlay hints
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
@@ -400,7 +395,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 --: DAP
-require('mason-nvim-dap').setup {
+require('mason-nvim-dap').setup { ---@diagnostic disable-line: missing-fields
   automatic_installation = true,
 }
 vim.keymap.set('n', '<F5>', require('dap').continue, { desc = 'Debug: Start/Continue' })
@@ -441,9 +436,9 @@ vim.keymap.set('n', '<leader>D', require('lazydocker').open, { desc = 'Lazy[D]oc
 local dbee_opts = function(opts)
   opts.noremap = true
   opts.nowait = true
-  return ops
+  return opts
 end
-require('dbee').setup {
+require('dbee').setup { ---@diagnostic disable-line: missing-fields
   drawer = {
     mappings = {
       { key = 'r', mode = 'n', action = 'refresh', opts = dbee_opts { desc = '[R]efresh' } },
@@ -546,10 +541,20 @@ require('cmp').setup.filetype({ 'sql' }, {
     { name = 'buffer' },
   },
 })
+require('cmp-dbee').setup()
 -- Capitalize SQL keywords
 for _, item in pairs(require('cmp-dbee.constants').reserved_sql_keywords) do
   item.name = string.upper(item.name)
 end
+
+--: Formatting
+require('conform').setup {
+  format_on_save = {},
+  formatters_by_ft = {
+    lua = { 'stylua' },
+    python = { 'ruff' },
+  },
+}
 
 --: Which-key
 require('which-key').setup {
